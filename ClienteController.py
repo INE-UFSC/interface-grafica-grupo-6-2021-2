@@ -18,13 +18,27 @@ class ClienteController:
 
             if event == sg.WIN_CLOSED:
                 rodando = False
+
             elif event == 'Cadastrar':
-                #FIX ME - implementar lógica de cadastro
-                pass
+                nome = values['nome']
+                codigo = values['codigo']
+                if nome != '' and codigo != '':
+                    resultado = self.adiciona_cliente(codigo, nome)
+                else:
+                    resultado = 'Preencha todos os campos'
+
             elif event == 'Consultar':
-                #FIX ME - implementar lógica de consulta
-                pass
-            
+                nome = values['nome']
+                codigo = values['codigo']
+                if codigo != '' and nome == '':
+                    resultado = self.busca_codigo(codigo)    
+                elif codigo == '' and nome != '':
+                    resultado = self.busca_nome(nome)
+                elif codigo != '' and nome != '':
+                    resultado = 'Digite apenas um campo'
+                else:
+                    resultado = 'Digite em um dos campos'
+
             if resultado != '':
                 dados = str(resultado)
                 self.__telaCliente.mostra_resultado(dados)
@@ -33,18 +47,27 @@ class ClienteController:
 
 
     def busca_codigo(self, codigo):
-        try:
-            return self.__clientes[codigo]
-        except KeyError:
-            raise KeyError
+        if codigo.isnumeric():
+            codigo = int(codigo)
+            try:
+                return self.__clientes[codigo]
+            except:
+                return 'Codigo não encontrado'
+        else:
+            return 'Digite apenas numeros'
 
     # cria novo OBJ cliente e adiciona ao dict
     def adiciona_cliente(self, codigo, nome):
+        try:
+            codigo = int(codigo)   
+        except:
+            return 'Digite apenas numeros inteiros'
         self.__clientes[codigo] = Cliente(codigo, nome)
+        return f'{nome}: {codigo}'
     
     def busca_nome(self, nome):
         for key, val in self.__clientes.items():
             if val.nome == nome:
                 return key 
 
-        raise LookupError
+        return 'Nome não encontrado'
