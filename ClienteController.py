@@ -1,15 +1,16 @@
 from ClienteView import ClienteView
 from Cliente import Cliente
-import PySimpleGUI as sg 
+import PySimpleGUI as sg
+
 
 class ClienteController:
     def __init__(self):
         self.__telaCliente = ClienteView(self)
-        self.__clientes = {} #lista de objetos Cliente
+        self.__clientes = {}  # lista de objetos Cliente
 
     def inicia(self):
         self.__telaCliente.tela_consulta()
-        
+
         # Loop de eventos
         rodando = True
         resultado = ''
@@ -31,13 +32,13 @@ class ClienteController:
                 nome = values['nome'].strip()
                 codigo = values['codigo']
                 if codigo != '' and nome == '':
-                    resultado = self.busca_codigo(codigo)    
+                    resultado = self.busca_codigo(codigo)
                 elif codigo == '' and nome != '':
                     resultado = self.busca_nome(nome)
                 elif codigo != '' and nome != '':
-                    resultado = 'Digite apenas um campo'
+                    resultado = 'Por favor, digite em apenas um campo'
                 else:
-                    resultado = 'Digite em um dos campos'
+                    resultado = 'Por favor, digite em um dos campos'
 
             if resultado != '':
                 dados = str(resultado)
@@ -45,29 +46,28 @@ class ClienteController:
 
         self.__telaCliente.fim()
 
-
     def busca_codigo(self, codigo):
         if codigo.isnumeric():
             codigo = int(codigo)
             try:
                 return self.__clientes[codigo]
             except:
-                return 'Codigo não encontrado'
+                return 'Código não encontrado'
         else:
-            return 'Digite apenas números'
+            return 'Por favor, digite apenas números'
 
     # cria novo OBJ cliente e adiciona ao dict
     def adiciona_cliente(self, codigo, nome):
         try:
-            codigo = int(codigo)   
+            codigo = int(codigo)
         except:
-            return 'Digite apenas numeros inteiros'
+            return 'Por favor, digite apenas números inteiros'
         if codigo in self.__clientes:
             self.__clientes[codigo] = Cliente(codigo, nome)
             return f'{nome}: {codigo} cadastrado com sucesso'
         else:
             return 'Esse código já está em uso'
-    
+
     def busca_nome(self, nome):
         for key, val in self.__clientes.items():
             if val.nome == nome:
