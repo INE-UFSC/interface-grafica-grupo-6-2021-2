@@ -54,7 +54,7 @@ class ClienteController:
             except:
                 return 'Codigo não encontrado'
         else:
-            return 'Digite apenas numeros'
+            return 'Digite apenas números'
 
     # cria novo OBJ cliente e adiciona ao dict
     def adiciona_cliente(self, codigo, nome):
@@ -62,8 +62,11 @@ class ClienteController:
             codigo = int(codigo)   
         except:
             return 'Digite apenas numeros inteiros'
-        self.__clientes[codigo] = Cliente(codigo, nome)
-        return f'{nome}: {codigo}'
+        if codigo in self.__clientes:
+            self.__clientes[codigo] = Cliente(codigo, nome)
+            return f'{nome}: {codigo} cadastrado com sucesso'
+        else:
+            return 'Esse código já está em uso'
     
     def busca_nome(self, nome):
         for key, val in self.__clientes.items():
