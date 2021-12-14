@@ -68,6 +68,6 @@ class ClienteController:
     def busca_nome(self, nome):
         for key, val in self.__clientes.items():
             if val.nome == nome:
-                return key 
+                return self.__clientes[key]
 
         return 'Nome não encontrado'
