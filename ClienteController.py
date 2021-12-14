@@ -62,7 +62,7 @@ class ClienteController:
             codigo = int(codigo)
         except:
             return 'Por favor, digite apenas números inteiros'
-        if codigo in self.__clientes:
+        if codigo not in self.__clientes.keys():
             self.__clientes[codigo] = Cliente(codigo, nome)
             return f'{nome}: {codigo} cadastrado com sucesso'
         else:
