@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 class ClienteView():
     def __init__(self, controlador):
         self.__controlador = controlador
-        self.__container = [sg.Text('SHA-1 and SHA-256 Hashes for the file')]
+        self.__container = []
         self.__window = sg.Window("Consulta de clientes", self.__container ,font=("Helvetica", 14))
 
     def tela_consulta(self):
@@ -16,7 +16,7 @@ class ClienteView():
             [sg.Text('', key='status')]
         ]
 
-        self.__window = sg.Window("Consulta de clientes", self.__container ,font=("Helvetica", 14))
+        self.__window = sg.Window("Consulta de clientes", self.__container, font=("Helvetica", 14))
 
     def mostra_resultado(self, resultado): 
         self.__window.Element('resultado').Update(resultado)
