@@ -20,7 +20,7 @@ class ClienteController:
                 rodando = False
 
             elif event == 'Cadastrar':
-                nome = values['nome']
+                nome = values['nome'].strip()
                 codigo = values['codigo']
                 if nome != '' and codigo != '':
                     resultado = self.adiciona_cliente(codigo, nome)
@@ -28,7 +28,7 @@ class ClienteController:
                     resultado = 'Preencha todos os campos'
 
             elif event == 'Consultar':
-                nome = values['nome']
+                nome = values['nome'].strip()
                 codigo = values['codigo']
                 if codigo != '' and nome == '':
                     resultado = self.busca_codigo(codigo)    
